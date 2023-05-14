@@ -2,10 +2,15 @@ package com.example.madpractical2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     final String TITLE = "Main Activity";
@@ -16,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.v(TITLE, "On Create!");
+
+        TextView numText = findViewById(R.id.textView);
+        numText.setText("MAD "+generateNum());
 
         // Restore the followed state from savedInstanceState, if available
         if (savedInstanceState != null) {
@@ -29,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             followButton.setText("Follow");
         }
-
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,12 +44,29 @@ public class MainActivity extends AppCompatActivity {
                 if (followButton.getText().equals("Follow")) {
                     followButton.setText("Unfollow");
                     myUser.setFollowed(true);
+                    Toast.makeText(getApplicationContext(),"Followed" ,Toast.LENGTH_SHORT).show();
                 } else {
                     followButton.setText("Follow");
                     myUser.setFollowed(false);
                 }
             }
         });
+
+        Button messageButton = findViewById(R.id.button3);
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TITLE, "Message button is pressed");
+                Intent myIntent = new Intent(MainActivity.this,MessageGroup.class);
+                startActivity(myIntent);
+            }
+        });
+    }
+
+    private int generateNum(){
+        Random ran = new Random();
+        int myNumber = ran.nextInt(999999);
+        return myNumber;
     }
 
     @Override
