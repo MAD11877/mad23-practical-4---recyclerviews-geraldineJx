@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.v(TITLE, "On Create!");
 
-        TextView numText = findViewById(R.id.textView);
-        numText.setText("MAD "+generateNum());
+        //Text to show MAD2435324368(etc)
+//        TextView numText = findViewById(R.id.textView);
+//        numText.setText("MAD " + generateNum());
 
         // Restore the followed state from savedInstanceState, if available
         if (savedInstanceState != null) {
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             followButton.setText("Follow");
         }
+//        //For Follow button to change from follow to unfollow and vise versa
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 if (followButton.getText().equals("Follow")) {
                     followButton.setText("Unfollow");
                     myUser.setFollowed(true);
-                    Toast.makeText(getApplicationContext(),"Followed" ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Followed", Toast.LENGTH_SHORT).show();
                 } else {
                     followButton.setText("Follow");
                     myUser.setFollowed(false);
@@ -52,17 +54,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Message button
         Button messageButton = findViewById(R.id.button3);
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.v(TITLE, "Message button is pressed");
-                Intent myIntent = new Intent(MainActivity.this,MessageGroup.class);
+                Intent myIntent = new Intent(MainActivity.this, MessageGroup.class);
                 startActivity(myIntent);
             }
         });
     }
 
+    //Generate num for name
     private int generateNum(){
         Random ran = new Random();
         int myNumber = ran.nextInt(999999);
