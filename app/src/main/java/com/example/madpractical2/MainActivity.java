@@ -22,14 +22,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.v(TITLE, "On Create!");
 
-        //Text to show MAD2435324368(etc)
-//        TextView numText = findViewById(R.id.textView);
-//        numText.setText("MAD " + generateNum());
+        //recieve intent from adapter
+        Intent myIntent = getIntent();
+        String myName = myIntent.getStringExtra("username");
+        String myDescription = myIntent.getStringExtra("description");
+        int myID = myIntent.getExtras().getInt("id");
+        Boolean myFollowed = myIntent.getExtras().getBoolean("followed");
 
-        // Restore the followed state from savedInstanceState, if available
-        if (savedInstanceState != null) {
-            myUser = (User) savedInstanceState.get("myUser");
-        }
+        //Text to show MAD2435324368(etc)
+        TextView numText = findViewById(R.id.textView);
+        numText.setText(myName);
+        TextView descriptionText = findViewById(R.id.textView2);
+        descriptionText.setText(myDescription);
 
         // Set the text of the follow button based on the "followed" variable
         final Button followButton = findViewById(R.id.button2);
@@ -54,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Restore the followed state from savedInstanceState, if available
+        if (savedInstanceState != null) {
+            myUser = (User) savedInstanceState.get("myUser");
+        }
+
         //Message button
         Button messageButton = findViewById(R.id.button3);
         messageButton.setOnClickListener(new View.OnClickListener() {
@@ -64,13 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
-    }
-
-    //Generate num for name
-    private int generateNum(){
-        Random ran = new Random();
-        int myNumber = ran.nextInt(999999);
-        return myNumber;
     }
 
     @Override

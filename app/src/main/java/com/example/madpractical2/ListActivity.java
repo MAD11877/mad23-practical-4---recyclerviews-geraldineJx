@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ListActivity extends AppCompatActivity {
 
     String TITLE = "ListActivity";
+    ArrayList<User> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,19 +27,32 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         Log.v(TITLE, "On Create!");
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        makingList(); //call to make userlist
+
         //Recyclerview
-        List<User> users = new ArrayList<>();
-        users.add(new User("123", "1234", null, true));
-        users.add(new User("123A", "1234A", null, true));
-        users.add(new User("123B", "1234B", null, true));
-        users.add(new User("123C", "1234D", null, true));
-
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
         MyAdapter myAdapter = new MyAdapter(users);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(myAdapter);
+    }
+    private void makingList() {
+        for (int i = 0; i <= 20; i++) {
+            users.add(new User("Name" + generateNum(), "Description" + generateNum()
+                    , i, generateBoolen()));
+        }
+    }
+
+    //Generate num for name
+    private int generateNum() {
+        Random ran = new Random();
+        int myNumber = ran.nextInt(999999999);
+        return myNumber;
+    }
+    public boolean generateBoolen() {
+        Random rd = new Random(); // creating Random object
+        boolean myBoolean = rd.nextBoolean();
+        return myBoolean;
     }
 }
 
